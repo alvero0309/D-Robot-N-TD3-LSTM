@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="rto" xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find rto_description)/urdf/components/rto_parts.urdf.xacro"/>
+  <xacro:include filename="$(find rto_description)/urdf/components/rto_body.urdf.xacro"/>
+  <xacro:include filename="$(find rto_description)/urdf/sensors/asus_xtion_pro.urdf.xacro"/>
+  <xacro:include filename="$(find rto_description)/urdf/sensors/hokuyo.urdf.xacro"/>
+  <xacro:include filename="pioneer3dx_plugins.xacro"/>
+
+  <xacro:rto_body/>
+  
+  <xacro:plate parent="base_link" name="plate"/>
+  <xacro:bracket parent="base_link" name="bracket_hokuyo" scale="0.001">
+    <origin xyz="0.101 0 0.15" rpy="0 0 1.57"/>
+  </xacro:bracket>
+  <xacro:bracket parent="base_link" name="bracket_camera" scale="0.000666666667">
+    <origin xyz="0.084 0 0.271" rpy="0 3.14 1.57"/>
+  </xacro:bracket>
+
+<!--
+  <xacro:sensor_asus_xtion_pro parent="base_link"/>
+  <xacro:hokuyo name="hokuyo" parent="base_link">
+    <origin xyz="0.08 0 0.2015" rpy="0 0 0"/>
+  </xacro:hokuyo>
+  -->
+    <!-- Laser sin gpu-->
+  <xacro:include filename="$(find rto_description)/xacro/laser/hokuyo.xacro"/>
+  <xacro:laser name="front_laser" parent="base_link" xyz="0.08 0 0.2015" rpy="0 0 0" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser"/>
+  
+    <xacro:include filename="$(find rto_description)/xacro/camera/camera.xacro"/>
+  <xacro:cam name="front_camera" parent="base_link" xyz="0.025 0 0.32" rpy="0 0 0" />
+
+  <xacro:include filename="$(find rto_description)/xacro/camera/cameraD.xacro"/>
+  <xacro:camD name="cameraD" parent="base_link" xyz="0.025 0 0.32" rpy="0 0 0" />
+  <!-- Velodyne -->
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="360" gpu="false" min_angle="-1.57" max_angle="1.57" min_range="0.1">
+    <origin xyz="0.125 0 0.25" rpy="0 0 0" />
+  </xacro:VLP-16>
+  
+    
+
+</robot>

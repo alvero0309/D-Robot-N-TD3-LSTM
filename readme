@@ -1,0 +1,75 @@
+############# Guia de instalación para sistemas operativos ubuntu +20.04
+
+############# Dockerfile 
+Descargar e instalar DockerFile de github Alejandro Vega, aprox use 16gb con todas sus dependencias
+
+
+############Utilizar gazebo con docker y otorgarle espacio de trabajo de la laptop anfitrion 
+docker run --gpus all -it --rm --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ --env="QT_X11_NO_MITSHM=1"  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ros-noetic
+
+###########cambiar usuario
+su ale
+
+#######################
+#####Reinciar Ros
+source ~/DRL-robot-navigation/catkin_ws/devel/setup.bash
+
+export ROS_HOSTNAME=localhost
+export ROS_MASTER_URI=http://localhost:11311
+export ROS_PORT_SIM=11311
+export GAZEBO_RESOURCE_PATH=~/DRL-robot-navigation/catkin_ws/src/multi_robot_scenario/launch
+source /opt/ros/noetic/setup.bash
+source ~/.bashrc
+cd ~/DRL-robot-navigation/catkin_ws
+source devel_isolated/setup.bash
+
+#Visualización Gazebo
+sudo gzclient
+ o
+rosrun gazebo_ros gzclient
+
+
+##########Instalación de ros
+source /opt/ros/noetic/setup.bash
+#Instalación permanente en bash
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+cd ~/DRL-robot-navigation/TD3
+python3 train_velodyne_td3.py
+
+######  Matar todos los procesos
+killall -9 rosout roslaunch rosmaster gzserver nodelet robot_state_publisher gzclient python python3
+
+
+
+
+
+
+
+#Instrucciones para ejecutar
+
+export ROS_HOSTNAME=localhost
+export ROS_MASTER_URI=http://localhost:11311
+export ROS_PORT_SIM=11311
+export GAZEBO_RESOURCE_PATH=~/DDRL-Robot-Navigation/catkin_ws/src/multi_robot_scenario/launch
+
+source ~/.bashrc
+cd ~/DDRL-Robot-Navegation/catkin_ws
+source devel_isolated/setup.bash
+#Directoriio
+~/DDRL-Robot-Navegation/TD3
+#Run the container
+docker run --gpus all -it --rm --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ ros-noetic
+
+Utilizar gazebo
+docker run --gpus all -it --rm --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ --env="QT_X11_NO_MITSHM=1"  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ros-noetic
+
+cambiar usuario
+su ale
+
+Ejecutar gazebo
+/home/ale/DRL-robot-navigation/catkin_ws/src/robotino_description/launch
+
+source ~/DRL-robot-navigation/catkin_ws/devel/setup.bash
+
